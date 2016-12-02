@@ -6,7 +6,7 @@
 /*   By: bpatel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/26 19:16:26 by bpatel            #+#    #+#             */
-/*   Updated: 2016/11/28 20:58:10 by bpatel           ###   ########.fr       */
+/*   Updated: 2016/12/01 13:41:51 by bpatel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <fcntl.h>
 #include "libft.h"
 
-#define BUF_SIZE 100
-
+#define BUF_SIZE 4000
 /* 
  * allowed functions exit, open, close, write, read, malloc, free
 */
@@ -43,28 +42,28 @@
 **	Read information from a fixed file called "valid_1"
 */
 
-int 	read_information(void)
+char 	*read_information(char* file_name)
 {
 	char buf[BUF_SIZE + 1];
+	char *return_string;
 	int  read_file;
+	int  bytes_read;
 
-	read_file = open("valid_1", O_RDWR);
+	read_file = open(file_name, O_RDWR);
 	if (read_file == -1)
 	{
 		ft_putstr("Error:Something fucked up happend in your code");
-		return (1);
+		return (NULL);
 	}
-	read_file = read(read_file, buf, BUF_SIZE);
-	buf[read_file] = '\0';
-	ft_putstr(buf);
+	bytes_read = read(read_file, buf, BUF_SIZE);
+	//printf("%d\n", bytes_read);
+	return_string = ft_strdup(buf);
 	if (close(read_file == -1))
 	{
 		ft_putstr("close() error");
-		return (1);
+		return (NULL);
 	}
-	ft_putchar('\n');
-	ft_putnbr(read_file);
-	return (0);
+	return (return_string);
 }
 
 /*	
@@ -74,32 +73,48 @@ int 	read_information(void)
 ** 	see if tetrimino is a valid shape.
 */
 
-void	is_valid(char *file, size_t file_buffer)
+int	is_valid(char *file, size_t file_buffer)
 {
-	int iter;
+	size_t iter;
 	int j;
 
-	iter = 0;
+	iter = 4;
+	j = -1;
 	//code will iterate through string 4 char, check for new line on 5th
 	// char <-will do this 4 times and check for 2 new lines
-	while (file_buffer)
+	while (file_buffer > iter)
 	{
-		while (iter <= 20)
+		while (j++ < 3)
 		{
 			if (file[iter] != '\n')
 				return (0);
 			iter += 5;
 		}
-		if (file[iter + 1] != '\n')
+		if (file[iter] != '\n' && file[iter + 1] != '\n')
 			return (0);
-		file_buffer -= iter;
-		iter;
+		else
+		{
+			iter += 1;
+			j = 0;
+		}
 	}
 	return (1);
 }
 
-
 int 	main(int argc, char **argv)
 {
-	read_information();
+	int read_file_bytes;
+	char *file_name;
+	char *buf;
+	int return_value;
+
+	file_name = argv[argc - 1];
+	if (argc != 2)
+	{
+		ft_putstr("wrong number of inputs: try again");
+		return (0);
+	}
+	buf = read_information(file_name);
+	return_value = is_valid(buf, 41);
+	printf("%d\n", return_value);
 }
