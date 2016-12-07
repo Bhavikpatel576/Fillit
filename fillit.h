@@ -40,6 +40,6 @@ char		*ft_strctrim(const char *s);
 char		**ft_tet_split(const char *s);
 int			ft_tit_count(char const *string);
 char     	*ft_istwonew(const char *s, size_t num_words);
-const char		*valid_tetrimino(void);
+void		valid_tetrimino(void);
 
 #endif
