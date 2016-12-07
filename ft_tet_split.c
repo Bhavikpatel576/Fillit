@@ -30,15 +30,12 @@ char		**ft_tet_split(const char *s)
 		return (0);
 	num_words = ft_tit_count(s);
 	words = (char **)ft_memalloc(sizeof(char*) * (num_words + 1));
-	printf("%zu\n", num_words);
 	if (!words)
 		return (NULL);
 	word = 0;
 	while (word < num_words)
 	{
-		while (*s == '\n' || *s == '.')
-			++s;
-		iter = ft_istwonew(s);
+		iter = ft_istwonew(s, num_words);
 		if (iter)
 			words[word] = ft_strsub(s, 0, iter - s);
 		else

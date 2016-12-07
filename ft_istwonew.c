@@ -12,14 +12,24 @@
 
 #include "libft.h"
 
-char     *ft_istwonew(const char *s)
+char     *ft_istwonew(const char *s, size_t num_words)
 {
 	char    *new;
 
-	new = ft_strchr(s,'\n');
-	if (*(++new) == '\n')
+	if (num_words == 1)
 	{
+		new = (char *)s + 20;
 		return (new);
+	}
+	else 
+	{
+		new  = (char *)s;
+		while (*new != '\0')
+		{
+			if (*new == '\n' && *(++new) == '\n')
+				return (new);
+			++new;
+		}	
 	}
 	return (new);
 }

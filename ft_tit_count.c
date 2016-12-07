@@ -21,7 +21,6 @@ int	ft_tit_count(char const *string)
 	count = 1;
 	i = 0;
 
-	printf("%s\n", string);
 	if (!string)
 		return (0);
 	while (string[i] != '\0')

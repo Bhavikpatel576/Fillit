@@ -13,7 +13,8 @@
 NAME	=	libfillit.a
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
-SRC		=	ft_fillit.c ft_strctrim.c ft_tet_split.c ft_tit_count.c ft_istwonew.c
+SRC		=	ft_fillit.c ft_strctrim.c ft_tet_split.c ft_tit_count.c ft_istwonew.c \
+			ft_valid_tets.c
 
 OBJ		=	$(SRC:.c=.o)
 
