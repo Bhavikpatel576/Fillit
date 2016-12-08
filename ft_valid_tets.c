@@ -11,30 +11,17 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "libft.h"
 #include <stdio.h>
 
 
-void	valid_tetrimino(void)
+char	**valid_tetrimino(void)
 {
+	char **valid_tet_test;
+	char *array = "####?#....#....#....#?##..##?#....##....#?##....##?#...##...#?\
+	##...##?#....#....##?###..#?##....#....#?#..###?#....#...##?#....###?##...#....#?\
+	###....#?###...#?.#...##....#?.#...###?#....##...#?";
 
- 	char valid_tets[0] = "####";
-	char valid_tets[1] = "#....#....#....#";
-	char valid_tets[2] = ".##..##";
-	char valid_tets[3] = "#....##....#";
-	char valid_tets[4] = "##....##";
-	char valid_tets[5] = "#...##...#";
-	char valid_tets[6] = "##...##";
-	char valid_tets[7] = "#....#....##";
-	char valid_tets[8] = "###..#";
-	char valid_tets[9] = "##....#....#";
-	char valid_tets[10] = "#..###";
-	char valid_tets[11] = "#....#...##";
-	char valid_tets[12] = "#....###";
-	char valid_tets[13] = "##...#....#";
-	char valid_tets[14] = "###....#";
-	char valid_tets[15] = "###...#";
-	char valid_tets[16] = ".#...##....#";
-	char valid_tets[17] = ".#...###";
-	char valid_tets[18] = "#....##...#";
-
+	valid_tet_test = ft_strsplit(array, '?');
+	return (valid_tet_test);
  }

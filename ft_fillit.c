@@ -57,6 +57,7 @@ char 	*read_information(char* file_name)
 **  if the information is valid return error prompt. Will count to see if a 4 x 4
 ** 	block has been passed through. Return true or false. Second step will be to 
 ** 	see if tetrimino is a valid shape. ****currently results in a false negative with single tets**
+**	**************Still need to fix the function so it handles only one tetrimino************
 */
 
 int	is_valid(char *file, size_t file_buffer)
@@ -110,19 +111,30 @@ void	*convert_to_dot(char *string_tetrino)
 **	array of predefined shapes with strcmp for validation. 
 */
 
-int		validate_tetrino(char *string_shape)
+int		validate_tetrino(char **string_shape)
 {
 	int i;
-	convert_to_dot(string_shape);
+	int j;
+	char **valid_tets = valid_tetrimino();
 
 	i = 0;
-	while (i < 19)
+	j = 0;
+	while (string_shape[j] != 0)
 	{
-		if (ft_strcmp(ft_strctrim(string_shape), valid_tets[i]) == 0)
-			return (1);
-		i++;
+		convert_to_dot(string_shape[j]);
+		while (i < 19)
+		{
+			if (i == 18 && ft_strcmp(ft_strctrim(string_shape[j]), valid_tets[i]) != 0)
+				return (0);
+			if (ft_strcmp(ft_strctrim(string_shape[j]), valid_tets[i]) == 0)
+				break;
+			// printf("%s\n", (valid_tets[i]));
+			// printf("%d\n", i);
+			i++;
+		}
+		j++;
 	}
-	return (0);
+	return (1);
 }
 
 int 	main(int argc, char **argv)
@@ -132,25 +144,29 @@ int 	main(int argc, char **argv)
 	char **tetrimino_in_file;
 	int return_value;
 
-	valid_tetrimino();
+	//reads in file and checks to see if argument value is correct
 	file_name = argv[argc - 1];
 	if (argc != 2)
 	{
 		ft_putstr("wrong number of inputs: try again");
 		return (0);
 	}
+	//input file read into 'buf'
 	buf = read_information(file_name);
+
+	//running the is_valid function to see if the input file is correctly 
+	//outputting valid 4x4 pieces 
 	return_value = is_valid(buf, 41);  //need to calculate buff size
-	// if (return_value == 0)
-	// 	return (0);
-	// else 
+	if (return_value == 0)
+		return (0);
+	else 
+
+	//assign the tetriminos into a 2d array to validate the pieces.
 	tetrimino_in_file = ft_tet_split(buf);
 
+	//run the validate_tet function to do a string compare against
+	//predefined tetriminos set up in ft_valid_tet.c
+	printf("%d\n", validate_tetrino((tetrimino_in_file)));
 
-
-	// printf("%s\n", "main function output");
-	// printf("%d\n", validate_tetrino(convert_to_dot(tetrimino_in_file[0])));
-	// printf("%s\n", (tetrimino_in_file[1]));
 }
-
 
